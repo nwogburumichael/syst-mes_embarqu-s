@@ -1,0 +1,11 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP18F45K22 -DL -O11111114 -fo8 -N"C:\Users\micha\Desktop\Bloc_3\Systèmes embarqués II\TP CAN2\CanRtr.mcppi" -SP"D:\Systeme embarqué\mikroC PRO for PIC\Defs\" -SP"D:\Systeme embarqué\mikroC PRO for PIC\uses\P18\" -SP"C:\Users\micha\Desktop\Bloc_3\Systèmes embarqués II\TP CAN2\" -IP"D:\Systeme embarqué\mikroC PRO for PIC\uses\P18\" "CanRtr.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl"	 
+hint: 0	1139	Available RAM: 1515 [bytes], Available ROM: 32768 [bytes]	 
+diagnostics: 0	122	Compilation Started	CanRtr.c
+diagnostics: 3	123	Compiled Successfully	CanRtr.c
+diagnostics: 0	127	All files Compiled in 157 ms	 
+hint: 0	1144	Used RAM (bytes): 0 (1%)  Free RAM (bytes): 1515 (99%)	Used RAM (bytes): 0 (1%)  Free RAM (bytes): 1515 (99%)
+hint: 0	1144	Used ROM (bytes): 30 (1%)  Free ROM (bytes): 32738 (99%)	Used ROM (bytes): 30 (1%)  Free ROM (bytes): 32738 (99%)
+diagnostics: 0	125	Project Linked Successfully	CanRtr.mcppi
+diagnostics: 0	128	Linked in 46 ms	 
+diagnostics: 0	129	Project 'CanRtr.mcppi' completed: 265 ms	 
+diagnostics: 0	103	Finished successfully: 28 sept. 2022, 12:44:58	CanRtr.mcppi

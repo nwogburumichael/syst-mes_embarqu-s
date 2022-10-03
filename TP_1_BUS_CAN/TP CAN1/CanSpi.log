@@ -1,0 +1,11 @@
+0	1	mikroCPIC1618.exe -MSF -DBG -pP18F45K22 -DL -O11111114 -fo8 -N"C:\Users\micha\Desktop\Bloc_3\Systèmes embarqués II\TP CAN1\CanSpi.mcppi" -SP"D:\Systeme embarqué\mikroC PRO for PIC\Defs\" -SP"D:\Systeme embarqué\mikroC PRO for PIC\uses\P18\" -SP"C:\Users\micha\Desktop\Bloc_3\Systèmes embarqués II\TP CAN1\" -IP"D:\Systeme embarqué\mikroC PRO for PIC\uses\P18\" "CanSpi.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CString.mcl" "__Lib_CStdlib.mcl" "__Lib_CMath.mcl" "__Lib_Conversions.mcl" "__Lib_Sprintf.mcl" "__Lib_Button.mcl" "__Lib_ADC_K22_B.mcl" "__Lib_SPI_c345d014.mcl" "__Lib_CANSPI.mcl" "__Lib_LcdConsts.mcl" "__Lib_Lcd.mcl" "__Lib_SPIT6963C.mcl"	 
+hint: 0	1139	Available RAM: 1515 [bytes], Available ROM: 32768 [bytes]	 
+diagnostics: 0	122	Compilation Started	CanSpi.c
+diagnostics: 168	123	Compiled Successfully	CanSpi.c
+diagnostics: 0	127	All files Compiled in 125 ms	 
+hint: 0	1144	Used RAM (bytes): 160 (11%)  Free RAM (bytes): 1355 (89%)	Used RAM (bytes): 160 (11%)  Free RAM (bytes): 1355 (89%)
+hint: 0	1144	Used ROM (bytes): 21729 (66%)  Free ROM (bytes): 11039 (34%)	Used ROM (bytes): 21729 (66%)  Free ROM (bytes): 11039 (34%)
+diagnostics: 0	125	Project Linked Successfully	CanSpi.mcppi
+diagnostics: 0	128	Linked in 78 ms	 
+diagnostics: 0	129	Project 'CanSpi.mcppi' completed: 235 ms	 
+diagnostics: 0	103	Finished successfully: 28 sept. 2022, 10:09:08	CanSpi.mcppi
