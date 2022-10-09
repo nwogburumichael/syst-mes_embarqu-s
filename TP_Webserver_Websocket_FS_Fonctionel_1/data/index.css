@@ -1,0 +1,60 @@
+
+    body {
+      background-color: rgb(190, 197, 220);
+    }
+  
+  h1 {
+    text-align: center;
+    }
+
+    h2 {
+    text-align: left;
+    }
+
+    h3 {
+    text-align: right;
+    }
+    div.layout_signalisation {
+    position: fixed;
+    color:rgb(37, 37, 41);
+    font-size: 35px;
+    top: 300px;
+    left: 1220px; 
+    }
+
+    div.layout_valuer_temp{
+    position: fixed;
+    color: rgb(120, 37, 90);
+    font-size: 35px;
+    top: 340px;
+    left: 1200px; 
+  
+    }
+    #btn 
+    {
+   
+    display: inline-block;
+    text-decoration: none;
+    background: #8CD460;
+    color: rgba(255,255,255, 0.80);
+    font-weight: bold;
+    font: 60px arial, sans-serif;
+    width: 50px;
+    height: 50px;
+    line-height: 150px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    box-shadow: 0px 0px 0px 8px #8CD460;
+    border: solid 2px rgba(255,255,255, 0.47);
+    transition: 0.5s;
+
+    }
+    .header_bouton {
+      background-color: #563535;
+      padding-left: 5px;
+      
+      text-align: center;
+     
+    }
