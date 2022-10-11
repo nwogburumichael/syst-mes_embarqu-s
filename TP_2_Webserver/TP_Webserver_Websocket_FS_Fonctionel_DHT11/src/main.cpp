@@ -1,8 +1,11 @@
 #include <Arduino.h>
-
+#include <SPI.h>
+#include <Wire.h>
 #include "FS.h"
 #include <LittleFS.h>
 #include <Adafruit_Sensor.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 #include <DHT.h>
 #include <DHT_U.h>
 #define DHT11PIN 26
@@ -17,10 +20,15 @@ DHT dht(DHT11PIN, DHT11);
 #include <ESPAsyncWebServer.h>
 #include <WebSocketsServer.h>
 
+//Oled 
+#define SCREEN_WIDTH 128 
+#define SCREEN_HEIGHT 64
+#define OLED_RESET     -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // Variables pour la connexion wifi 
-const char* ssid = "Wifi-Abosi";
-const char* password = "Nwogburu234";
+const char* ssid = "LAPTOP_T";
+const char* password = "TIMON123";
 const char* PARAM_MESSAGE = "message";
 
 // Variables Get
@@ -30,37 +38,65 @@ const char* PARAM_INPUT_1 = "";
 const char* PARAM_INPUT_2 = "";
 
 // Variables pour le client
+#define BP1 12
+#define LED_Statut 32
+#define LED_Client 2
 float humi;
 float temperature;
 bool LEDonoff = false;
 int NB = 0;
 String valeur_bp = "OFF";
 String JSONtxt ="";
+String valeur_LED_S ="";
  
 AsyncWebServer server(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
 
-void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventType type, void * arg, uint8_t *data, size_t len){
- 
-  if(type == WS_EVT_CONNECT){
- 
-    Serial.println("Websocket client connection received");
-    client->text("Hello from ESP32 Server");
- 
-  } else if(type == WS_EVT_DISCONNECT){
-    Serial.println("Client disconnected");
- 
+void affichage_oled(){
+if (digitalRead(BP1) == 1)
+    {
+      valeur_bp = "ON";
+    }
+  else {
+     valeur_bp ="OFF";
   }
-}
+display.clearDisplay();
+display.setTextSize(1);
+display.setTextColor(WHITE);
+display.setCursor(0, 10);
+display.println(WiFi.localIP());
+display.setCursor(0,20);
+display.println(valeur_bp);
+display.println(valeur_LED_S);
+display.display();
 
+
+}
 void notFound(AsyncWebServerRequest *request) {
     request->send(404, "text/plain", "Not found");
 }
 
 // Evenement du Websocket server
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t welength)
+// Evenement du Websocket server
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t payload, size_t welength)
 {
-  String Donnees_recue = (const char *)payload;
+
+
+  switch(type) {
+        case WStype_DISCONNECTED:
+            Serial.println("[WSc] Disconnected!\n");
+            if (webSocket.connectedClients()==0)
+              digitalWrite(LED_Client,LOW);
+              serial.print("pas de clients connectés");
+            break;
+        case WStype_CONNECTED:
+            Serial.printf("[WSc] Connected to url: %s\n", payload);
+            digitalWrite(LED_Client,HIGH);
+            // send message to server when Connected
+            webSocket.broadcastTXT("Connected");
+            break;
+  }
+  String Donnees_recue = (const char)payload;
   Serial.print("Données recue = ");
   Serial.println(Donnees_recue);
 
@@ -78,17 +114,26 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t welengt
       Serial.println(" ");
 
       if(var == "LEDonoff")
-        {
-          LEDonoff = false;
-          if(val == "ON") LEDonoff = true;
+        {  
+          if(val == "ON") 
+          digitalWrite(LED_Statut,HIGH);
+          valeur_LED_S ="ON";
+          else
+          digitalWrite(LED_Statut,LOW);
+          valeur_LED_S="OFF";
         }
+
   }
 }
 
 void setup() {
  
     Serial.begin(115200);
-
+    pinMode(BP1, INPUT_PULLDOWN);
+    pinMode(LED_Statut, OUTPUT);
+    pinMode(LED_Client, OUTPUT);
+    digitalWrite(LED_Statut, LOW);
+    digitalWrite(LED_Client, LOW);
     // Connexion Wifi
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
@@ -151,6 +196,9 @@ void setup() {
     server.begin();
     webSocket.begin();
     webSocket.onEvent(webSocketEvent);
+    if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D Pour 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    }
    
 }
  
@@ -161,6 +209,8 @@ void loop() {
    Serial.println(temperature) ;
    
    delay(2000);
+   affichage_oled();
+  
    JSONtxt = "{\"humi\":\""+String(humi)+"\",\"temperature\":\""+String(temperature)+"\",\"valeur_bp\":\""+valeur_bp+"\"}";
    webSocket.broadcastTXT(JSONtxt);
 
