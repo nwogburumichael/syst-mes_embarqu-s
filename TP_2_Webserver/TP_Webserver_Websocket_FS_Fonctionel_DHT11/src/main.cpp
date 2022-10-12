@@ -87,7 +87,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t payload, size_t welength
             Serial.println("[WSc] Disconnected!\n");
             if (webSocket.connectedClients()==0)
               digitalWrite(LED_Client,LOW);
-              serial.print("pas de clients connectés");
+              Serial.print("pas de clients connectés");
             break;
         case WStype_CONNECTED:
             Serial.printf("[WSc] Connected to url: %s\n", payload);
