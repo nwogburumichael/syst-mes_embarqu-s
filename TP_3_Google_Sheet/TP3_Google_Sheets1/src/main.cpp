@@ -16,7 +16,7 @@ void sendData(String params);
 
 const char *ssid = "mike";
 const char *password = "nwogburu234";
-String GOOGLE_SCRIPT_ID = "AKfycbzqeLy9WuiHJCQEFTAE041qKBIXVmf2tmtNUuPcY769accgFPHcelyjMPfcnFo0e7IZ";
+String GOOGLE_SCRIPT_ID = "AKfycbzzL7jxZBGfQcfeQZ_YoesvB55V3_-vJvSsOyCYrDCOuX-HsALLdNFS8r1sox3L67J4";
 
 const char * root_ca=\
 "-----BEGIN CERTIFICATE-----\n" \
@@ -91,11 +91,13 @@ void sendData(String params) {
 }
 void loop() {
   //Send an HTTP POST request every delay
-  
+
     //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED && digitalRead(BP_transmission) == HIGH){
       strTemp = String(dht.readTemperature());
+      strTemp.replace(".",",");
       strHum = String(dht.readHumidity());
+      strHum.replace(".",",");
       strldr= String((analogRead(LDR)));
       Serial.println(strTemp);
       Serial.println(strHum);
@@ -106,7 +108,7 @@ void loop() {
       delay(100);
       digitalWrite(LED,LOW);
     }
-
+     
     lastTime = millis();
   }
 
