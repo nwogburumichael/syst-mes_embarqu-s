@@ -3,6 +3,8 @@
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
+#include "FS.h"
+
 #define IO_USERNAME  "TimTq"
 #define IO_KEY       "aio_SsWQ822D79Fn0tFejz8FOshjFazP"
 #define WIFI_SSID  "LAPTOP_T"
@@ -12,6 +14,14 @@
 AdafruitIO_WiFi io (IO_USERNAME,IO_KEY,WIFI_SSID, WIFI_PASS);
 DHT_Unified dht(DATA_PIN, DHT11);
 
+// default PWM pins for ESP8266.
+// you should change these to match PWM pins on other platforms.
+#define RED_PIN   4
+#define GREEN_PIN 5
+#define BLUE_PIN  2
+
+// set up the  feed
+AdafruitIO_Feed *RGB = io.feed("RGB");
 AdafruitIO_Feed *LED = io.feed("LED");
 AdafruitIO_Feed *Temperature = io.feed("temperature");
 AdafruitIO_Feed *Humidite = io.feed("humidite");
@@ -26,6 +36,21 @@ void handleMessage(AdafruitIO_Data *data) {
 
   // write the current state to the led
   digitalWrite(LED_PIN, data->toPinLevel());
+    // print RGB values and hex value
+  Serial.println("Received:");
+  Serial.print("  - R: ");
+  Serial.println(data->toRed());
+  Serial.print("  - G: ");
+  Serial.println(data->toGreen());
+  Serial.print("  - B: ");
+  Serial.println(data->toBlue());
+  Serial.print("  - HEX: ");
+  Serial.println(data->value());
+
+  // invert RGB values for common anode LEDs
+  analogWrite(RED_PIN, 255 - data->toRed());
+  analogWrite(GREEN_PIN, 255 - data->toGreen());
+  analogWrite(BLUE_PIN, 255 - data->toBlue());
 
 }
 void setup() {
@@ -37,7 +62,10 @@ void setup() {
   Serial.print("Connecting to Adafruit IO");
   io.connect();
 
+  // Actviation de la fonction en fontion des données du dashboard
   LED->onMessage(handleMessage);
+  RGB->onMessage(handleMessage);
+
   while(io.status() < AIO_CONNECTED) {
     Serial.print(".");
     delay(500);
@@ -45,7 +73,9 @@ void setup() {
   Serial.println();
   Serial.println(io.statusText());
 
+  // recois les valeur du Dashboard
   LED->get();
+  RGB->get();
 }
 
   
