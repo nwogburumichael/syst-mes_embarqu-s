@@ -79,9 +79,6 @@ void setup() {
   RGB->get();
 }
 
-  
-
-
 void loop() {
   io.run();
   sensors_event_t event;
