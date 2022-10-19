@@ -6,7 +6,7 @@
 #include "FS.h"
 
 #define IO_USERNAME  "TimTq"
-#define IO_KEY       "aio_SsWQ822D79Fn0tFejz8FOshjFazP"
+#define IO_KEY       "aio_femc009g6FIiRQkgjeEqsj55IhOu"
 #define WIFI_SSID  "LAPTOP_T"
 #define WIFI_PASS  "TIMON123"
 #define LED_PIN 2
@@ -21,11 +21,17 @@ DHT_Unified dht(DATA_PIN, DHT11);
 #define BLUE_PIN  2
 #define LDR 39
 
+// photocell state
+int current = 0;
+int last = -1;
+
+
 // set up the  feed
 AdafruitIO_Feed *RGB = io.feed("RGB");
 AdafruitIO_Feed *LED = io.feed("LED");
 AdafruitIO_Feed *Temperature = io.feed("temperature");
 AdafruitIO_Feed *Humidite = io.feed("humidite");
+AdafruitIO_Feed *luminosite = io.feed("luminosité");
 void handleMessage(AdafruitIO_Data *data) {
 
   Serial.print("received <- ");
@@ -81,6 +87,16 @@ void setup() {
 
 void loop() {
   io.run();
+  current = analogRead(LDR);
+  // return if the value hasn't changed
+  if(current == last)
+    return;
+
+  Serial.print("sending -> ");
+  Serial.println(current);
+  luminosite->save(current);
+  last = current;
+
   sensors_event_t event;
   dht.temperature().getEvent(&event);
 
