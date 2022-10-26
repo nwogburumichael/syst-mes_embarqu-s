@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+  #mqtt Service
+  mqtt:
+    container_name: mosquitto
+    image: eclipse-mosquitto:latest
+    restart: always
+    ports:
+      - "1883:1883"
+    networks:
+      - app-network       
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - /mosquitto/data
+      - /mosquitto/log
+  #Node-RED Service
+  nodered:
+    depends_on:
+      - mqtt    
+    container_name: node-red
+    image: nodered/node-red:latest
+    restart: always
+    ports:
+      - "1880:1880"
+    networks:
+      - app-network          
+    volumes:
+      - node_red_user_data:/data
+    links:
+      - "mariadb:mariadb"
+  #Maria Database Service
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    restart: always
+    #command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    networks:
+      - app-network          
+    environment:
+      - MYSQL_ROOT_PASSWORD=emile
+      - MYSQL_DATABASE=db_nodered
+      - MYSQL_USER=ec
+      - MYSQL_PASSWORD=ec
+    volumes:
+      - mariadb_data:/var/lib/mysql
+  #phpMyAdmin Service
+  phpmyadmin:
+    depends_on:
+      - mariadb    
+    container_name: phpmyadmin
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - app-network      
+    environment:
+      #- PMA_ARBITRARY=1
+      - PMA_HOST=mariadb
+      - MYSQL_ROOT_PASSWORD=emile
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+  node_red_user_data:
+  mosquitto_persistence:
+ 
