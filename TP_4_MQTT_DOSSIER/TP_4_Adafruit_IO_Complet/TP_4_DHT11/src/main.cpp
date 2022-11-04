@@ -12,7 +12,7 @@
 #define WIFI_PASS  "Nwogburu234"
 
 
-// you should change these to match PWM pins on other platforms.
+
 #define RED_PIN   4
 #define GREEN_PIN 5
 #define BLUE_PIN  2
@@ -27,7 +27,7 @@ int couleurRed = 0;
 int couleurBlue = 0;
 int couleurGreen = 0;
 
-// photocell state
+// LDR
 int LDR_Value= 0;
 
 
@@ -102,7 +102,7 @@ void handleRGB_RED(AdafruitIO_Data *data){
     }
     strip.show();
 }
-
+// Fonction d'actualisation des données
 void Actualisation(){
 
   sensors_event_t event;
