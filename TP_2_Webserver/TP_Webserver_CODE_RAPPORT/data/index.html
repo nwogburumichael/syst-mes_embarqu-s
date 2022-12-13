@@ -1,0 +1,59 @@
+
+ <!DOCTYPE HTML>
+ <html>
+ <head>
+   <meta charset="UTF-8">
+    <title>ESP32 Web Server</title></h1>
+    
+    <link rel = "stylesheet" type="text/css" href = "index.css"/>
+ </head>
+
+ <!------------------------------H T M L----------------------------->
+
+    <div class="grid-container">
+      <div class="headerMilieu">
+        <div class="layout_header" >
+           <h2>E S P 3 2<br>Thermostat DHT11</h2>
+        </div>  
+      </div>
+  
+      <div class="contenu">
+          <div class="layout_main" >
+            Températur actuel : <span id="valeur_temp"></span>.<br> 
+            Humidité actuel : <span id="valeur_humidity"></span>.<br>   
+            BP : <span id="valeur_bp"></span>.
+            <section class="main">
+              <div class="switch demo">
+                <input type="checkbox" id = "bp_led" onclick = bouton()> <label><i></i></label>
+              </div>
+            </section>
+          </div>  
+      </div>  
+
+      <div class="FooterDroit">
+        <div class="layout_footer" >
+          <p>Timon Taquet Nwogburu Michael</p>
+        </div>
+      </div>
+
+      <div class="FooterGauche">
+        <div class="layout_footer" >
+          <p id="time"></p>
+          <p id="current_date"></p>
+        </div>
+      </div>
+
+      <div class="headerDroit">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIS9QrUeiVNR8Bc4JrM_dU7NPFsZVYujBu9w&usqp=CAU" alt="Ephec">
+      </div>
+
+      <div class = "headerGauche" ></div>
+    </div>
+    
+  <!-----------------------------JavaScript--------------------------->     
+  </body>
+    <script src="index.js"></script>
+ </body>
+ </html>
+
+
